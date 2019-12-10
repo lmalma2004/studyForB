@@ -8,6 +8,16 @@
 #define NOTHING 4
 using namespace std;
 
+#include <iostream>
+#include <queue>
+#include <vector>
+#define UP      0
+#define LEFT   1
+#define DOWN   2
+#define RIGHT   3
+#define NOTHING 4
+using namespace std;
+
 int moveX[4] = { -1, 0, 1, 0 };
 int moveY[4] = { 0, 1, 0, -1 };
 
@@ -170,11 +180,42 @@ int solve() {
 	return 0;
 }
 
+int abs(int a) {
+	if (a < 0)
+		return -a;
+	return a;
+}
+
+int solve2() {
+	x2 = x1 - x2;
+	y2 = y1 - y2;
+	x2 = abs(x2);
+	y2 = abs(y2);
+
+	if (x2 == y2)
+		return x2 * 2;
+
+	if (x2 > y2) {
+		int tmp = x2;
+		x2 = y2;
+		y2 = tmp;
+	}
+
+	if ((y2 - x2) % 2 == 0) {
+		int val = (y2 - x2) / 2;
+		return (x2 * 2) + val + val * 3;
+	}
+	else {
+		int val = (y2 - x2) / 2;
+		return (x2 * 2) + (val + 1) + val * 3;
+	}
+}
+
 int main() {
 	scanf("%d", &T);
 	for (int tc = 1; tc <= T; tc++) {
 		scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
-		printf("#%d %d\n", tc, solve());
+		printf("#%d %d\n", tc, solve2());
 	}
 	return 0;
 }
